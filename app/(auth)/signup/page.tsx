@@ -2,11 +2,26 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { Mail, Lock, Zap } from 'lucide-react'
 import { createClient } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+
+function Logo() {
+  return (
+    <span className="inline-flex items-center gap-2">
+      <span
+        className="inline-flex items-center justify-center rounded-[9px]"
+        style={{ width: 32, height: 32, background: 'var(--pulse-500)', boxShadow: 'var(--glow-primary)' }}
+      >
+        <Zap className="h-4 w-4 fill-white text-white" />
+      </span>
+      <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 18, letterSpacing: '-0.02em', color: 'var(--text-strong)' }}>
+        Pulse
+      </span>
+    </span>
+  )
+}
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
@@ -19,85 +34,94 @@ export default function SignupPage() {
     e.preventDefault()
     setError(null)
     setLoading(true)
-
     const supabase = createClient()
     const { error } = await supabase.auth.signUp({ email, password })
-
-    if (error) {
-      setError(error.message)
-      setLoading(false)
-      return
-    }
-
+    if (error) { setError(error.message); setLoading(false); return }
     setSuccess(true)
     setLoading(false)
   }
 
   if (success) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Check your email</CardTitle>
-          <CardDescription>
-            We sent a confirmation link to <strong>{email}</strong>. Click it to activate your account.
-          </CardDescription>
-        </CardHeader>
-        <CardFooter>
-          <Link href="/login" className="text-sm text-primary hover:underline">
+      <div className="flex flex-1 items-center justify-center p-8 bg-white">
+        <div className="w-full max-w-[320px] text-center">
+          <Logo />
+          <h1 className="mt-7 mb-3" style={{ fontSize: 24 }}>Check your email</h1>
+          <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
+            We sent a confirmation link to <strong style={{ color: 'var(--text-strong)' }}>{email}</strong>. Click it to activate your account.
+          </p>
+          <Link href="/login" className="text-sm font-semibold" style={{ color: 'var(--text-link)' }}>
             Back to sign in
           </Link>
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     )
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-2xl">Create account</CardTitle>
-        <CardDescription>Start using your AI-powered CRM</CardDescription>
-      </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
-          {error && (
-            <p className="text-sm text-destructive bg-destructive/10 px-3 py-2 rounded-md">{error}</p>
-          )}
-          <div className="space-y-1.5">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="At least 6 characters"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              minLength={6}
-              required
-            />
-          </div>
-        </CardContent>
-        <CardFooter className="flex flex-col gap-3">
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Creating account…' : 'Create account'}
-          </Button>
-          <p className="text-sm text-muted-foreground text-center">
+    <>
+      {/* Left — form */}
+      <div className="flex flex-1 items-center justify-center p-8 bg-white">
+        <div className="w-full max-w-[320px]">
+          <Logo />
+          <h1 className="mt-7 mb-1.5" style={{ fontSize: 28 }}>Create account</h1>
+          <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>Start using your AI-powered CRM.</p>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+            {error && (
+              <p className="text-sm px-3 py-2 rounded-md" style={{ color: 'var(--hot-600)', background: 'var(--hot-50)' }}>{error}</p>
+            )}
+            <div>
+              <label className="block text-[13px] font-semibold mb-1.5" style={{ color: 'var(--text-strong)' }}>Email</label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: 'var(--text-subtle)' }} />
+                <Input type="email" placeholder="you@example.com" className="pl-9" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              </div>
+            </div>
+            <div>
+              <label className="block text-[13px] font-semibold mb-1.5" style={{ color: 'var(--text-strong)' }}>Password</label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: 'var(--text-subtle)' }} />
+                <Input type="password" placeholder="At least 6 characters" className="pl-9" value={password} onChange={(e) => setPassword(e.target.value)} minLength={6} required />
+              </div>
+            </div>
+            <Button type="submit" size="lg" className="w-full mt-1.5" disabled={loading}>
+              {loading ? 'Creating account…' : 'Create account'}
+            </Button>
+          </form>
+
+          <p className="text-[13px] text-center mt-5" style={{ color: 'var(--text-muted)' }}>
             Already have an account?{' '}
-            <Link href="/login" className="text-primary hover:underline">
-              Sign in
-            </Link>
+            <Link href="/login" className="font-semibold" style={{ color: 'var(--text-link)' }}>Sign in</Link>
           </p>
-        </CardFooter>
-      </form>
-    </Card>
+        </div>
+      </div>
+
+      {/* Right — brand panel */}
+      <div
+        className="hidden md:flex flex-1 flex-col justify-center p-12 relative overflow-hidden"
+        style={{ background: 'var(--pulse-500)', color: '#fff' }}
+      >
+        <div className="absolute rounded-full" style={{ top: -80, right: -60, width: 280, height: 280, background: 'rgba(255,255,255,0.08)' }} />
+        <div className="absolute rounded-full" style={{ bottom: -100, left: -40, width: 240, height: 240, background: 'rgba(255,255,255,0.06)' }} />
+
+        <span className="pulse-eyebrow" style={{ color: 'rgba(255,255,255,0.8)', letterSpacing: '0.08em' }}>AI CRM</span>
+        <h2 className="mt-3.5 max-w-[360px]" style={{ color: '#fff', fontSize: 36, lineHeight: 1.1 }}>
+          Close more, work less.
+        </h2>
+        <p className="mt-4 max-w-[340px]" style={{ color: 'rgba(255,255,255,0.86)', fontSize: 15, lineHeight: 1.6 }}>
+          AI scores your leads, drafts your outreach, and tracks your pipeline — all in one place.
+        </p>
+
+        <div className="flex gap-6 mt-9">
+          {([['4s', 'avg enrich'], ['41%', 'reply rate'], ['2.3×', 'more meetings']] as const).map(([n, l]) => (
+            <div key={l}>
+              <div className="pulse-data" style={{ fontSize: 26, fontWeight: 600, color: '#fff' }}>{n}</div>
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.78)', marginTop: 2 }}>{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   )
 }

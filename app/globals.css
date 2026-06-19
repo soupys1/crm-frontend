@@ -1,36 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
+    /* ---- Brand / Primary : Electric Cobalt ---- */
+    --pulse-50:  #eef2ff;
+    --pulse-100: #dbe3ff;
+    --pulse-200: #bccbff;
+    --pulse-300: #8ea6ff;
+    --pulse-400: #5f7dff;
+    --pulse-500: #3b5bff;
+    --pulse-600: #2b46f0;
+    --pulse-700: #2236cc;
+    --pulse-800: #1f2fa3;
+    --pulse-900: #1d2b80;
+
+    /* ---- Dopamine accents ---- */
+    --hot-500:    #ff3d57;
+    --hot-600:    #e62646;
+    --hot-50:     #ffe8ec;
+    --warm-500:   #ff9f1c;
+    --warm-600:   #ed8a00;
+    --warm-50:    #fff3e0;
+    --won-500:    #16c47f;
+    --won-600:    #0ea96a;
+    --won-50:     #def7ec;
+    --ai-500:     #8b5cf6;
+    --ai-600:     #7339e0;
+    --ai-50:      #f1eaff;
+    --cold-500:   #38bdf8;
+    --cold-50:    #e2f5ff;
+
+    /* ---- Neutrals : Slate ---- */
+    --ink-950: #0b0f1a;
+    --ink-900: #111726;
+    --ink-800: #1c2536;
+    --ink-700: #2c3850;
+    --ink-600: #475069;
+    --ink-500: #6a7488;
+    --ink-400: #939cae;
+    --ink-300: #c2c8d4;
+    --ink-200: #e1e5ec;
+    --ink-150: #eceff4;
+    --ink-100: #f3f5f9;
+    --ink-50:  #f8f9fc;
+    --white:   #ffffff;
+
+    /* ---- Semantic aliases ---- */
+    --color-primary:            var(--pulse-500);
+    --color-primary-hover:      var(--pulse-600);
+    --color-primary-active:     var(--pulse-700);
+    --color-primary-foreground: var(--white);
+    --color-primary-soft:       var(--pulse-50);
+    --color-primary-soft-fg:    var(--pulse-700);
+    --color-ring:               var(--pulse-500);
+
+    --surface-page:    var(--ink-50);
+    --surface-card:    var(--white);
+    --surface-sunken:  var(--ink-100);
+    --surface-inverse: var(--ink-950);
+    --surface-hover:   var(--ink-100);
+
+    --text-strong:   var(--ink-950);
+    --text-body:     var(--ink-800);
+    --text-muted:    var(--ink-500);
+    --text-subtle:   var(--ink-400);
+    --text-on-color: var(--white);
+    --text-link:     var(--pulse-600);
+
+    --border-subtle: var(--ink-200);
+    --border-strong: var(--ink-300);
+    --border-field:  var(--ink-300);
+
+    --color-hot:       var(--hot-500);
+    --color-hot-soft:  var(--hot-50);
+    --color-warm:      var(--warm-500);
+    --color-warm-soft: var(--warm-50);
+    --color-cold:      var(--cold-500);
+    --color-cold-soft: var(--cold-50);
+    --color-won:       var(--won-500);
+    --color-won-soft:  var(--won-50);
+    --color-ai:        var(--ai-500);
+    --color-ai-soft:   var(--ai-50);
+    --color-success:   var(--won-500);
+    --color-danger:    var(--hot-500);
+    --color-danger-hover: var(--hot-600);
+    --color-warning:   var(--warm-500);
+
+    /* ---- Radius ---- */
+    --radius-xs:   6px;
+    --radius-sm:   8px;
+    --radius-md:   10px;
+    --radius-lg:   14px;
+    --radius-xl:   20px;
+    --radius-2xl:  28px;
+    --radius-full: 999px;
+
+    /* ---- Shadows ---- */
+    --shadow-xs: 0 1px 2px rgba(17,23,38,.06);
+    --shadow-sm: 0 1px 2px rgba(17,23,38,.06), 0 2px 6px rgba(17,23,38,.05);
+    --shadow-md: 0 2px 4px rgba(17,23,38,.06), 0 8px 20px rgba(17,23,38,.08);
+    --shadow-lg: 0 8px 16px rgba(17,23,38,.08), 0 20px 40px rgba(17,23,38,.12);
+
+    --glow-primary: 0 6px 18px rgba(59,91,255,.38);
+    --glow-won:     0 6px 18px rgba(22,196,127,.36);
+    --glow-hot:     0 6px 18px rgba(255,61,87,.36);
+    --focus-ring:   0 0 0 3px rgba(59,91,255,.30);
+
+    /* ---- Motion ---- */
+    --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --dur-fast:    120ms;
+    --dur-base:    180ms;
+    --dur-slow:    280ms;
+
+    /* ---- Typography ---- */
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-sans:    'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono:    'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+    /* ---- Layout ---- */
+    --sidebar-width: 232px;
+    --content-max:   1080px;
+
+    /* shadcn compatibility aliases */
+    --background:          var(--ink-50);
+    --foreground:          var(--ink-800);
+    --card:                var(--white);
+    --card-foreground:     var(--ink-800);
+    --primary:             var(--pulse-500);
+    --primary-foreground:  var(--white);
+    --secondary:           var(--ink-100);
+    --secondary-foreground: var(--ink-800);
+    --muted:               var(--ink-100);
+    --muted-foreground:    var(--ink-500);
+    --accent:              var(--ink-100);
+    --accent-foreground:   var(--ink-800);
+    --destructive:         var(--hot-500);
+    --destructive-foreground: var(--white);
+    --border:              var(--ink-200);
+    --input:               var(--ink-300);
+    --ring:                var(--pulse-500);
+    --radius:              10px;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  *, *::before, *::after { box-sizing: border-box; }
+
   body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-[--surface-page] text-[--text-body];
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv01", "ss01";
   }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--text-strong);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+  h2 { font-size: 24px; }
+  h3 { font-size: 20px; }
+
+  p { margin: 0; }
+
+  a { color: var(--text-link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  :focus-visible { outline: none; box-shadow: var(--focus-ring); }
+  ::selection { background: var(--pulse-200); color: var(--ink-950); }
+}
+
+/* Numeric / tabular data helper */
+.pulse-data {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum";
+  letter-spacing: -0.01em;
+}
+
+/* Uppercase eyebrow / stage label helper */
+.pulse-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
