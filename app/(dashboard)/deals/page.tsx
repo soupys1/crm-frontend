@@ -61,7 +61,7 @@ function DraggableDealCard({ deal, isOverlay }: { deal: Deal; isOverlay?: boolea
           <GripVertical className="h-4 w-4" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-[13px] font-semibold truncate" style={{ color: 'var(--text-strong)' }}>{deal.leads?.name ?? '—'}</p>
+          <p className="text-[13px] font-semibold truncate" style={{ color: 'var(--text-strong)' }}>{deal.leads?.name ?? ''}</p>
           <p className="text-[11px] truncate" style={{ color: 'var(--text-muted)' }}>{deal.leads?.company ?? ''}</p>
           {deal.value != null && (
             <p className="pulse-data text-[13px] font-semibold mt-1" style={{ color: 'var(--won-600)' }}>
@@ -110,7 +110,7 @@ function DroppableColumn({ stage, deals }: { stage: (typeof STAGES)[number]; dea
             <DraggableDealCard key={deal.id} deal={deal} />
           ))}
           {deals.length === 0 && (
-            <div className="text-[12px] text-center py-4" style={{ color: 'var(--text-subtle)' }}>—</div>
+            <div className="text-[12px] text-center py-4" style={{ color: 'var(--text-subtle)' }}>Empty</div>
           )}
         </div>
 

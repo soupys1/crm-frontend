@@ -60,7 +60,7 @@ export default function SignupPage() {
 
   return (
     <>
-      {/* Left — form */}
+      {/* Left - form */}
       <div className="flex flex-1 items-center justify-center p-8 bg-white">
         <div className="w-full max-w-[320px]">
           <Logo />
@@ -97,7 +97,7 @@ export default function SignupPage() {
         </div>
       </div>
 
-      {/* Right — brand panel */}
+      {/* Right - brand panel */}
       <div
         className="hidden md:flex flex-1 flex-col justify-center p-12 relative overflow-hidden"
         style={{ background: 'var(--pulse-500)', color: '#fff' }}
@@ -110,7 +110,7 @@ export default function SignupPage() {
           Close more, work less.
         </h2>
         <p className="mt-4 max-w-[340px]" style={{ color: 'rgba(255,255,255,0.86)', fontSize: 15, lineHeight: 1.6 }}>
-          AI scores your leads, drafts your outreach, and tracks your pipeline — all in one place.
+          AI scores your leads, drafts your outreach, and tracks your pipeline. All in one place.
         </p>
 
         <div className="flex gap-6 mt-9">

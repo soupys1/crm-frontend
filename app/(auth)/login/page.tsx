@@ -44,7 +44,7 @@ export default function LoginPage() {
 
   return (
     <>
-      {/* Left — form */}
+      {/* Left - form */}
       <div className="flex flex-1 items-center justify-center p-8 bg-white">
         <div className="w-full max-w-[320px]">
           <Logo />
@@ -81,7 +81,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Right — brand panel */}
+      {/* Right - brand panel */}
       <div
         className="hidden md:flex flex-1 flex-col justify-center p-12 relative overflow-hidden"
         style={{ background: 'var(--pulse-500)', color: '#fff' }}
@@ -94,7 +94,7 @@ export default function LoginPage() {
           The pipeline that moves itself.
         </h2>
         <p className="mt-4 max-w-[340px]" style={{ color: 'rgba(255,255,255,0.86)', fontSize: 15, lineHeight: 1.6 }}>
-          Enrich every lead, draft every email, and watch deals advance — Pulse does the busywork so you close.
+          Enrich every lead, draft every email, and watch deals advance. Pulse does the busywork so you close.
         </p>
 
         <div className="flex gap-6 mt-9">
