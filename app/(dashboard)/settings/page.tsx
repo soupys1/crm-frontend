@@ -1,51 +1,76 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, ExternalLink } from 'lucide-react'
+import { Mail, ExternalLink, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { createClient } from '@/lib/supabase'
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000'
 
 export default function SettingsPage() {
   const [connecting, setConnecting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  function connectGmail() {
+  const connected =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('gmail') === 'connected'
+
+  async function connectGmail() {
     setConnecting(true)
-    // The backend /auth/gmail/connect redirects to Google's consent screen.
-    // We open it in the same tab so the OAuth callback can redirect back.
-    window.location.href = `${API_BASE}/auth/gmail/connect`
+    setError(null)
+    try {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+
+      if (!session?.access_token) {
+        setError('Not signed in. Please log in and try again.')
+        setConnecting(false)
+        return
+      }
+
+      window.location.href = `${API_BASE}/auth/gmail/connect?token=${session.access_token}`
+    } catch {
+      setError('Something went wrong. Please try again.')
+      setConnecting(false)
+    }
   }
 
-  const connected = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('gmail') === 'connected'
-
   return (
-    <div className="p-6 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Settings</h1>
+    <div className="p-7" style={{ maxWidth: 680, margin: '0 auto' }}>
+      <h1 className="mb-6">Settings</h1>
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Mail className="h-5 w-5" />
-            Gmail Integration
+          <CardTitle className="text-base flex items-center gap-2">
+            <Mail className="h-[17px] w-[17px]" style={{ color: 'var(--pulse-500)' }} />
+            Gmail integration
           </CardTitle>
           <CardDescription>
-            Connect your Gmail account to send emails directly from the CRM and see email thread history on leads.
+            Connect your Gmail to send emails directly from Pulse and see thread history on leads.
           </CardDescription>
         </CardHeader>
         <CardContent>
           {connected ? (
-            <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 border border-green-200 rounded-md px-3 py-2.5">
-              <span className="w-2 h-2 rounded-full bg-green-500 shrink-0" />
+            <div
+              className="flex items-center gap-2 text-sm rounded-md px-3 py-2.5"
+              style={{ color: 'var(--won-600)', background: 'var(--won-50)', border: '1px solid #bbf0d8' }}
+            >
+              <Check className="h-4 w-4 shrink-0" />
               Gmail connected successfully
             </div>
           ) : (
             <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                You&apos;ll be redirected to Google to authorize access to send emails and read threads.
+              {error && (
+                <p className="text-sm px-3 py-2 rounded-md" style={{ color: 'var(--hot-600)', background: 'var(--hot-50)' }}>
+                  {error}
+                </p>
+              )}
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                You will be redirected to Google to authorize access to send emails and read threads.
               </p>
               <Button onClick={connectGmail} disabled={connecting} variant="outline">
-                <ExternalLink className="h-4 w-4 mr-2" />
+                <ExternalLink className="h-4 w-4" />
                 {connecting ? 'Redirecting…' : 'Connect Gmail'}
               </Button>
             </div>
